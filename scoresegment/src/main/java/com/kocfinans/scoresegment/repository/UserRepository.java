@@ -7,5 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String>{
+  /**
+   * Find user by tc
+   * @param tcNo
+   * @return
+   */
   User findByTcNo(String tcNo);
 }

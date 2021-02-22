@@ -26,6 +26,12 @@ public class MonthlyIncomeBracketService{
     return monthlyIncomeBracketDtoList;
   }
 
+  /**
+   *
+   * @param code
+   * @return
+   * @throws ScoreSegmentException
+   */
   public MonthlyIncomeBracket monthlyIncomeBracketByCode(int code) throws ScoreSegmentException{
     MonthlyIncomeBracket monthlyIncomeBracket = monthlyIncomeBracketRepository.findByCode(code);
     if (monthlyIncomeBracket == null){

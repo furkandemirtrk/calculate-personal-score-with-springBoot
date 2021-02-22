@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController{
 
+  @Autowired
   private final UserService userService;
   private final UserScoreProcessService userScoreProcessService;
 
@@ -37,20 +40,27 @@ public class UserController{
     return ResponseEntity.ok(userService.getAllUsers());
   }
 
-  @ApiOperation(value = "User Score Calculate", response = UserDto.class)
+  @ApiOperation(value = "User Score Calculate", response = UserScoreCalculateRequest.class)
   @PostMapping
   public ResponseEntity<Integer> userScoreCalculate(@RequestBody UserScoreCalculateRequest userScoreCalculateRequest) throws ScoreSegmentException{
-    log.info("createUser");
+    log.info("userScoreCalculate");
     UserDto userDto = userService.findUserByTcNo(userScoreCalculateRequest.getTcNo());
     if (userDto == null){
       throw new ScoreSegmentException(ErrorCodeEnum.FIELD_VALIDATION_ERROR);
     }
     if (!(userDto.getName().equals(userScoreCalculateRequest.getName()) && userDto.getSurname().equals(userScoreCalculateRequest.getSurname()) && userDto.getPhoneNumber().equals(userScoreCalculateRequest.getPhoneNumber()))){
       throw new ScoreSegmentException(ErrorCodeEnum.FIELD_VALIDATION_ERROR);
-    }else {
-      userDto = userService.updateUser(userScoreCalculateRequest);
-      int totalScore = userScoreProcessService.userScoreProcess(userDto);
-      return ResponseEntity.ok(totalScore);
     }
+    userDto = userService.updateUser(userScoreCalculateRequest);
+    int totalScore = userScoreProcessService.userScoreProcess(userDto);
+    return ResponseEntity.ok(totalScore);
+
+  }
+
+  @ApiOperation(value = "Create User", response = UserDto.class)
+  @PostMapping(value = ApiPaths.UserController.CREATE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws ScoreSegmentException{
+    log.info("create user start");
+    return ResponseEntity.ok(userService.createUser(userDto));
   }
 }

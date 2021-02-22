@@ -2,6 +2,7 @@ package com.kocfinans.scoresegment.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
@@ -14,7 +15,10 @@ import java.time.LocalDateTime;
 public class User{
   @Id
   private String id;
+
+  @Indexed(unique=true)
   private String tcNo;
+
   private String name;
   private String surname;
   private String phoneNumber;

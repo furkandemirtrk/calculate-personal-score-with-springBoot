@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -46,13 +45,13 @@ public class CityScoreRestClient{
       if (objectResponse.getStatusCode() != HttpStatus.OK){
         throw new ScoreSegmentException(ErrorCodeEnum.INTERNAL_SERVER_ERROR);
       } else {
-        log.info("update balance ok");
+        log.info("get city score ok");
         return (int)objectResponse.getBody();
       }
     }
     catch (Exception e){
       log.error("getCityDtoByCode error : ",e);
-      return 0;
+      throw new ScoreSegmentException(ErrorCodeEnum.INTERNAL_SERVER_ERROR);
     }
   }
 }

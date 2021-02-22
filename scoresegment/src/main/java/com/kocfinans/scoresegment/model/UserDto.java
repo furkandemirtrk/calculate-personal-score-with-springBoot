@@ -1,5 +1,6 @@
 package com.kocfinans.scoresegment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kocfinans.scoresegment.entity.User;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class UserDto{
         .build();
   }
 
+  @JsonIgnore
   public String getFullName(){
     return this.name.concat(" ").concat(this.surname);
   }
