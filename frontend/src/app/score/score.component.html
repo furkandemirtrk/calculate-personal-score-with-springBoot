@@ -1,0 +1,83 @@
+
+<p-dialog header="Title" [(visible)]="showPopup" [style]="{width: '50vw'}" modal="true" header="Toplam Skor">
+  {{popupText}} <br><br>
+  <button class="btn btn-info btn-sm" (click)="showPopup = false">Tamam</button>
+</p-dialog>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="overview-wrap">
+      <h2 class="title-1">Score Segment</h2>
+    </div>
+  </div>
+</div>
+<div class="row m-t-30">
+  <div class="col-md-12">
+    <div class="card">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="card-body card-block row">
+          <div class="col-md-6 form-group">
+            <div class="col col-md-12">
+              <label class=" form-control-label">TC Kimlik No</label>
+            </div>
+            <div class="col-12 col-md-12">
+              <input type="text" formControlName="tcNo" class="form-control"/>
+              <small *ngIf="f.tcNo.errors?.required || f.tcNo.errors?.maxlength || f.tcNo.errors?.minlength" class="form-text text-muted">Zorunlu alan ve Tc kimlik numaranız 11 haneli olmalıdır</small>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="col col-md-12">
+              <label class=" form-control-label">Telefon Numarası</label>
+            </div>
+            <div class="col-12 col-md-12">
+              <input type="text" formControlName="phoneNumber" class="form-control"/>
+              <small *ngIf="f.phoneNumber.errors?.required" class="form-text text-muted">Zorunlu Alan</small>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="col col-md-12">
+              <label class=" form-control-label">Ad</label>
+            </div>
+            <div class="col-12 col-md-12">
+              <input type="text" formControlName="name" class="form-control"/>
+              <small *ngIf="f.name.errors?.required" class="form-text text-muted">Zorunlu Alan</small>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="col col-md-12">
+              <label class=" form-control-label">Soyad</label>
+            </div>
+            <div class="col-12 col-md-12">
+              <input type="text" formControlName="surname" class="form-control"/>
+              <small *ngIf="f.surname.errors?.required" class="form-text text-muted">Zorunlu Alan</small>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="col col-md-12">
+              <label class=" form-control-label">Aylık Gelir Dilimi</label>
+            </div>
+            <div class="col-12 col-md-12">
+              <p-dropdown [(ngModel)]="selectedBracket" [options]="brackets" placeholder="Seçiniz"  class="dropdown" optionLabel="description" formControlName="monthlyIncomeBracketCode" id="monthlyIncomeBracket" ></p-dropdown>
+              <small *ngIf="f.monthlyIncomeBracketCode.errors?.required" class="form-text text-muted">Zorunlu Alan</small>
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <div class="col col-md-12">
+              <label class=" form-control-label">İl</label>
+            </div>
+            <div class="col-12 col-md-12">
+              <p-dropdown [(ngModel)]="selectedCity" [options]="cities" placeholder="Seçiniz" class="dropdown" optionLabel="name" formControlName="cityCode" id="cityCode" ></p-dropdown>
+              <small *ngIf="f.cityCode.errors?.required" class="form-text text-muted">Zorunlu Alan</small>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-success btn-sm" style="margin-right:5px ">Save</button>
+          <button type="reset" class="btn btn-danger btn-sm" >Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<p-toast position="top-right" key="notificationToast"></p-toast>
+
