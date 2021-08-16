@@ -1,4 +1,4 @@
-## Koç Finans Project
+##  Calculate Personal Score
 
 
 **Teknologies used in this project**
